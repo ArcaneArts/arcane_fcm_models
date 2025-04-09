@@ -8,12 +8,22 @@ mixin ArcaneFCMMessage {
 }
 
 class FCMDeviceHook extends MappingHook {
+  const FCMDeviceHook();
+
   @override
   Object? beforeDecode(Object? value) =>
-      value is Map<String, dynamic> ? FCMDeviceInfo.fromMap(value) : value;
+      value is List
+          ? value.map((i) => beforeDecode(i)).toList()
+          : value is Map<String, dynamic>
+          ? FCMDeviceInfo.fromMap(value)
+          : value;
   @override
   Object? beforeEncode(Object? value) =>
-      value is FCMDeviceInfo ? value.toMap() : value;
+      value is List<FCMDeviceInfo>
+          ? value.map((i) => i.toMap()).toList()
+          : value is FCMDeviceInfo
+          ? value.toMap()
+          : value;
 }
 
 class FCMDeviceInfo {
