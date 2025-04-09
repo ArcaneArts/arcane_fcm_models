@@ -12,7 +12,9 @@ class MyUserSettings with MyUserSettingsMappable, ModelCrud {
   ...
   
   // Along with your other properties, add this field here
-  @MappableField(hook: FCMDeviceHook()) // <-- This helps encode/decode with dart mappable
+  // NOTE: COPY THE SOURCE OF FCMDeviceInfo FROM THIS PACKAGE
+  // AND PUT IT IN THIS MODEL CLASS AND RENAME IT OR SOMETHING
+  @MappableField(hook: DartMappableIsTooDumbToUseHooksFromOtherPackagesSoICopiedTheSourceIntoTheModelClassToFixItFCMDeviceHook())
   final List<FCMDeviceInfo> devices;
 
   MyUserSettings({
@@ -25,6 +27,29 @@ class MyUserSettings with MyUserSettingsMappable, ModelCrud {
   // This is if your using firecrud
   @override
   List<FireModel<ModelCrud>> get childModels => [];
+}
+
+class DartMappableIsTooDumbToUseHooksFromOtherPackagesSoICopiedTheSourceIntoTheModelClassToFixItFCMDeviceHook
+    extends MappingHook {
+  const DartMappableIsTooDumbToUseHooksFromOtherPackagesSoICopiedTheSourceIntoTheModelClassToFixItFCMDeviceHook();
+
+  @override
+  Object? beforeDecode(Object? value) =>
+      value is List
+          ? value
+          .map((i) => FCMDeviceInfo.fromMap(i as Map<String, dynamic>))
+          .toList()
+          : value is Map<String, dynamic>
+          ? FCMDeviceInfo.fromMap(value)
+          : value;
+
+  @override
+  Object? beforeEncode(Object? value) =>
+      value is List<FCMDeviceInfo>
+          ? value.map((i) => i.toMap()).toList()
+          : value is FCMDeviceInfo
+          ? value.toMap()
+          : value;
 }
 ```
 
