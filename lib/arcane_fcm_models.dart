@@ -2,7 +2,7 @@ library arcane_fcm_models;
 
 import 'package:dart_mappable/dart_mappable.dart';
 
-mixin ArcaneFCMNotification {
+mixin ArcaneFCMMessage {
   String get user;
   Map<String, dynamic> toMap();
 }

@@ -47,9 +47,9 @@ part 'notification.mapper.dart';
   discriminatorKey: "ntype",
 )
 
-// You need to add the mixin ArcaneFCMNotification
-class MyNotification with MyNotificationMappable, ArcaneFCMNotification {
-  // ArcaneFCMNotification requires a user field since all notifications
+// You need to add the mixin ArcaneFCMMessage
+class MyNotification with MyNotificationMappable, ArcaneFCMMessage {
+  // ArcaneFCMMessage requires a user field since all notifications
   // Are delivered to a signed in user, this ensures only signed in users see their notifications
   @override
   final String user;
