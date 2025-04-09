@@ -1,3 +1,6 @@
+# 1.1.2
+* Fix Mapping Hook
+
 # 1.1.1
 * Fix Mapping Hook
 

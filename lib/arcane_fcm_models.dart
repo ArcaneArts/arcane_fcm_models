@@ -13,10 +13,13 @@ class FCMDeviceHook extends MappingHook {
   @override
   Object? beforeDecode(Object? value) =>
       value is List
-          ? value.map((i) => beforeDecode(i)).toList()
+          ? value
+              .map((i) => FCMDeviceInfo.fromMap(i as Map<String, dynamic>))
+              .toList()
           : value is Map<String, dynamic>
           ? FCMDeviceInfo.fromMap(value)
           : value;
+
   @override
   Object? beforeEncode(Object? value) =>
       value is List<FCMDeviceInfo>
